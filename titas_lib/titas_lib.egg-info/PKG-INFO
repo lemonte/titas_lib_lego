@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: titas_lib
+Version: 0.1.0
+Summary: Uma biblioteca Python para controle de robótica LEGO com Pybricks
+Author: Geanderson Lemonte
+Author-email: geandersonlemonte.gl@gmail.com
+Description-Content-Type: text/markdown
+Requires-Dist: pybricks
+
+# sek
+
+# comandos para executar no vscode
+
+source ../sek-main/.venv/bin/activate
+
+ pybricksdev run ble main.py

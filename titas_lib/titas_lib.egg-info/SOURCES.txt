@@ -1,0 +1,7 @@
+README.md
+setup.py
+titas_lib.egg-info/PKG-INFO
+titas_lib.egg-info/SOURCES.txt
+titas_lib.egg-info/dependency_links.txt
+titas_lib.egg-info/requires.txt
+titas_lib.egg-info/top_level.txt
