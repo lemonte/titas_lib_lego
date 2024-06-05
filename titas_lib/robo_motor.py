@@ -1,6 +1,6 @@
 # robo_motor.py
 from titas_lib.hub_base import HubType
-from titas_lib.acoes_robo import PararInstantaneamenteEMantenhaNoAngulo, __AcaoFinalRobo
+from titas_lib.acoes_robo import PararInstantaneamenteEMantenhaNoAngulo, AcaoFinalRobo
 from titas_lib.falar_erro import falar_erro
 
 class RoboMotor:
@@ -63,7 +63,7 @@ class RoboMotor:
     
 
     @falar_erro
-    def moverDuranteUmTempo(self, velocidade: float=0, tempo: int=0, aguardarAcaoFinalizar: bool =True, acaoAoFinalizar: __AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
+    def moverDuranteUmTempo(self, velocidade: float=0, tempo: int=0, aguardarAcaoFinalizar: bool =True, acaoAoFinalizar: AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
         """ Mover o motor durante um determinado tempo. """
         """ velocidade: Em graus/segundos """
         """ tempo: Em milisegundos """
@@ -73,7 +73,7 @@ class RoboMotor:
         return self.getMotor().run_time(velocidade, tempo, wait=aguardarAcaoFinalizar, then=acaoAoFinalizar.executar())
 
     @falar_erro
-    def moverUmAngulo(self, velocidade: float, angulo: int, aguardarAcaoFinalizar: bool =True, acaoAoFinalizar: __AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
+    def moverUmAngulo(self, velocidade: float, angulo: int, aguardarAcaoFinalizar: bool =True, acaoAoFinalizar: AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
         """ Mover o motor por um determinado angulo. """
         """ velocidade: Em graus/segundos """
         """ angulo: Em graus """
@@ -83,7 +83,7 @@ class RoboMotor:
     
     
     @falar_erro
-    def moverParaUmAnguloSuavemente(self, velocidade: float, anguloDestino: int, aguardarAcaoFinalizar: bool =True, acaoAoFinalizar: __AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
+    def moverParaUmAnguloSuavemente(self, velocidade: float, anguloDestino: int, aguardarAcaoFinalizar: bool =True, acaoAoFinalizar: AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
         """ Mover o motor para um determinado angulo baseado na referencia 0 do motor. """
         """ velocidade: Em graus/segundos """
         """ anguloDestino: Baseado na referencia 0 do motor """
@@ -92,7 +92,7 @@ class RoboMotor:
         return self.getMotor().run_target(velocidade, anguloDestino, wait=aguardarAcaoFinalizar, then=acaoAoFinalizar.executar())
 
     @falar_erro
-    def moverAteTravar(self, velocidade: float = 0, forcaLimite: int =100, acaoAoFinalizar: __AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
+    def moverAteTravar(self, velocidade: float = 0, forcaLimite: int =100, acaoAoFinalizar: AcaoFinalRobo = PararInstantaneamenteEMantenhaNoAngulo()):
         """ Mover o motor até que ele trave """
         """ velocidade: Em graus/segundos """
         """ forcaLimite: forca limite para considerar travado, sendo em porcentagem do torque total do motor 0 - 100% """
