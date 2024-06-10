@@ -16,5 +16,5 @@ class HubType:
 
     def getImports(self):
         if self.__imports is None:
-          raise TypeError("RoboBase não instanciado anteriormente")
+          self.__imports = RoboImports(hub_type=RoboHub.EV3BRICK)
         return self.__imports
