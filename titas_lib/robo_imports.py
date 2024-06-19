@@ -13,18 +13,18 @@ class RoboImports:
 
     def load_hub(self):
         if self.hub_type == RoboHub.EV3BRICK:
-            global Motor, UltrasonicSensor,LUMPDevice,DCMotor, ColorSensor, GyroSensor, Port, Stop, Direction, DriveBase, EV3Brick
+            global Motor, UltrasonicSensor,LUMPDevice,DCMotor, ColorSensor, GyroSensor, Port, Stop, Direction, DriveBase, EV3Brick,  Color, Button,Icon, Side
             from pybricks.ev3devices import Motor, UltrasonicSensor, ColorSensor, GyroSensor
-            from pybricks.parameters import Port, Stop, Direction
+            from pybricks.parameters import Port, Stop, Direction, Color, Button,Icon, Side
             from pybricks.robotics import DriveBase
             from pybricks.iodevices import LUMPDevice, DCMotor
             from pybricks.hubs import EV3Brick
             return EV3Brick()
 
         elif self.hub_type == RoboHub.SPIKEHUB:
-            global Motor, ColorSensor, ColorDistanceSensor, UltrasonicSensor, ForceSensor, Port, Stop, Direction, DriveBase, PrimeHub
+            global Motor, ColorSensor, ColorDistanceSensor, UltrasonicSensor, ForceSensor, Port, Stop, Direction, DriveBase, PrimeHub,  Color, Button,Icon, Side
             from pybricks.pupdevices import Motor, ColorSensor, ColorDistanceSensor, UltrasonicSensor, ForceSensor
-            from pybricks.parameters import Port, Stop, Direction
+            from pybricks.parameters import Port, Stop, Direction, Color, Button,Icon, Side
             from pybricks.robotics import DriveBase
             from pybricks.hubs import PrimeHub
             return PrimeHub()
