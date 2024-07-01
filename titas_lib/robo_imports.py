@@ -12,24 +12,61 @@ Stop = None
 Direction = None
 DriveBase = None
 EV3Brick = None
+PrimeHub = None
 Color = None
 Button = None
 Icon = None
 Side = None
+ColorDistanceSensor = None
+ForceSensor = None
+ColorDistanceSensor = None
 
 def load_hub(hub_type):
     global Motor, UltrasonicSensor, ColorSensor, GyroSensor, LUMPDevice, DCMotor, Port, Stop, Direction, DriveBase, EV3Brick, Color, Button, Icon, Side
     if hub_type == RoboHub.EV3BRICK:
-        from pybricks.ev3devices import Motor, UltrasonicSensor, ColorSensor, GyroSensor
-        from pybricks.parameters import Port, Stop, Direction, Color, Button, Icon, Side
-        from pybricks.robotics import DriveBase
-        from pybricks.iodevices import LUMPDevice, DCMotor
-        from pybricks.hubs import EV3Brick
+        from pybricks.ev3devices import Motor as ev3Motor, UltrasonicSensor as ev3UltrasonicSensor, ColorSensor as ev3ColorSensor, GyroSensor as ev3GyroSensor
+        from pybricks.parameters import Port as ev3Port, Stop as ev3Stop, Direction as ev3Direction, Color as ev3Color, Button as ev3Button, Icon as ev3Icon, Side as ev3Side
+        from pybricks.robotics import DriveBase as ev3DriveBase
+        from pybricks.iodevices import LUMPDevice as ev3LUMPDevice, DCMotor as ev3DCMotor
+        from pybricks.hubs import EV3Brick as ev3EV3Brick
+        
+        Motor = ev3Motor
+        UltrasonicSensor = ev3UltrasonicSensor
+        ColorSensor = ev3ColorSensor
+        GyroSensor = ev3GyroSensor
+        LUMPDevice = ev3LUMPDevice
+        DCMotor = ev3DCMotor
+        Port = ev3Port
+        Stop = ev3Stop
+        Direction = ev3Direction
+        DriveBase = ev3DriveBase
+        EV3Brick = ev3EV3Brick
+        Color = ev3Color
+        Button = ev3Button
+        Icon = ev3Icon
+        Side = ev3Side
+        
     elif hub_type == RoboHub.SPIKEHUB:
-        from pybricks.pupdevices import Motor, ColorSensor, ColorDistanceSensor, UltrasonicSensor, ForceSensor
-        from pybricks.parameters import Port, Stop, Direction, Color, Button, Icon, Side
-        from pybricks.robotics import DriveBase
-        from pybricks.hubs import PrimeHub
+        from pybricks.pupdevices import Motor as spikeMotor, ColorSensor as spikeColorSensor, ColorDistanceSensor as spikeColorDistanceSensor, UltrasonicSensor as spikeUltrasonicSensor, ForceSensor as spikeForceSensor
+        from pybricks.parameters import Port as spikePort, Stop as spikeStop, Direction as spikeDirection, Color as spikeColor, Button as spikeButton, Icon as spikeIcon, Side as spikeSide
+        from pybricks.robotics import DriveBase as spikeDriveBase
+        from pybricks.hubs import PrimeHub as spikePrimeHub
+        
+        Motor = spikeMotor
+        ColorSensor = spikeColorSensor
+        ColorDistanceSensor = spikeColorDistanceSensor
+        UltrasonicSensor = spikeUltrasonicSensor
+        ForceSensor = spikeForceSensor
+        Port = spikePort
+        Stop = spikeStop
+        Direction = spikeDirection
+        DriveBase = spikeDriveBase
+        PrimeHub = spikePrimeHub
+        Color = spikeColor
+        Button = spikeButton
+        Icon = spikeIcon
+        Side = spikeSide
+        
     else:
         raise ValueError("Tipo de hub não suportado.")
 
@@ -51,7 +88,7 @@ class RoboImports:
             raise ValueError("Tipo de hub não suportado.")
 
     def get_motor(self, port: str):
-        return Motor(self.__definirPorta(Port=port))
+        return Motor(self.__definirPorta(port))
 
     def getGiroscopico(self, port: str):
         return GyroSensor(self.__definirPorta(port))
@@ -64,14 +101,14 @@ class RoboImports:
         return ColorSensor(self.__definirPorta(Port))
 
     def getLUMPDevice(self, Port: str):
-        return LUMPDevice(self.__definirPorta(Port=Port))
+        return LUMPDevice(self.__definirPorta(Port))
 
     def getUltrasonicSensor(self, Port: str):
-        return UltrasonicSensor(self.__definirPorta(Port=Port))
+        return UltrasonicSensor(self.__definirPorta(Port))
 
     def getDCMotor(self, Port: str):
         """ Retorna o objeto DC do Motor do lego """
-        return DCMotor(self.__definirPorta(Port=Port))
+        return DCMotor(self.__definirPorta(Port))
 
     def getDirection(self):
         """ Retorna a classe Direction do lego """
