@@ -87,8 +87,11 @@ class RoboImports:
         else:
             raise ValueError("Tipo de hub não suportado.")
 
-    def get_motor(self, port: str):
-        return Motor(self.__definirPorta(port))
+    def get_motor(self, port: str, reverse:bool =False):
+        direction = Direction.CLOCKWISE
+        if(reverse):
+            direction = Direction.COUNTERCLOCKWISE
+        return Motor(self.__definirPorta(port), positive_direction=direction)
 
     def getGiroscopico(self, port: str):
         return GyroSensor(self.__definirPorta(port))

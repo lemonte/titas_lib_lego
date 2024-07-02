@@ -7,10 +7,10 @@ class RoboMotor:
     __motor = None
 
     @falar_erro
-    def __init__(self, Port: str):
+    def __init__(self, Port: str, reverse:bool = False):
         print("#### RoboMotor ####")
         try:
-            self.__motor = HubType.__instance.getImports().get_motor(port=Port)
+            self.__motor = HubType.__instance.getImports().get_motor(port=Port, reverse=reverse)
         except Exception as _:
           raise TypeError("Não foi possivel iniciar o motor, verifique a porta: " + Port)
     
