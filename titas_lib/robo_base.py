@@ -50,6 +50,10 @@ class RoboBase:
         return self.virarAngulo(-180)
     
     @falar_erro
+    def pararMotores(self):
+        return self.__driveBase.stop()
+
+    @falar_erro
     def virar180grausEsquerda(self):
         """ Virar 180 graus para esquerda  """
         return self.virarAngulo(180)
