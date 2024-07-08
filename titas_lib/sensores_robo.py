@@ -59,7 +59,10 @@ class RoboCor:
         except Exception as _:
           raise TypeError("Não foi possivel iniciar o sensor, verifique a porta: " + Port)
             
-    
+    @falar_erro
+    def pegarRGB(self):
+        return self.__sensor.rgb()
+
     @falar_erro
     def pegarCor(self):
         return self.__sensor.color()
