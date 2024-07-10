@@ -16,9 +16,10 @@ Color = None
 Button = None
 Icon = None
 Side = None
+PrimeHub = None
 
 def load_hub(hub_type):
-    global Motor, UltrasonicSensor, ColorSensor, GyroSensor, LUMPDevice, DCMotor, Port, Stop, Direction, DriveBase, EV3Brick, Color, Button, Icon, Side
+    global Motor, UltrasonicSensor, ColorSensor, GyroSensor, LUMPDevice, DCMotor, Port, Stop, Direction, DriveBase, EV3Brick, Color, Button, Icon, Side, PrimeHub
     if hub_type == RoboHub.EV3BRICK:
         from pybricks.ev3devices import Motor, UltrasonicSensor, ColorSensor, GyroSensor
         from pybricks.parameters import Port, Stop, Direction, Color, Button
@@ -57,7 +58,10 @@ class RoboImports:
         return Motor(self.__definirPorta(port), positive_direction=direction)
 
     def getGiroscopico(self, port: str):
-        return GyroSensor(self.__definirPorta(port))
+        try:
+            return GyroSensor(self.__definirPorta(port))
+        except Exception as e:
+            raise ValueError("Não foi possível iniciar o Giroscópio.")
 
     def getStop(self):
         """ Retorna a classe de Stop do lego. """
@@ -68,17 +72,29 @@ class RoboImports:
         return Color
 
     def getColorSensor(self, Port: str):
-        return ColorSensor(self.__definirPorta(Port))
+        try:
+            return ColorSensor(self.__definirPorta(Port))
+        except Exception as e:
+            raise ValueError("Não foi possível iniciar o sensor de Cor.")
 
     def getLUMPDevice(self, Port: str):
-        return LUMPDevice(self.__definirPorta(Port=Port))
+        try:
+            return LUMPDevice(self.__definirPorta(Port=Port))
+        except Exception as e:
+            raise ValueError("Não foi possível iniciar o LUMPDevice.")
 
     def getUltrasonicSensor(self, Port: str):
-        return UltrasonicSensor(self.__definirPorta(Port=Port))
+        try:
+            return UltrasonicSensor(self.__definirPorta(Port=Port))
+        except Exception as e:
+            raise ValueError("Não foi possível iniciar o UltrasonicSensor.")
 
     def getDCMotor(self, Port: str):
         """ Retorna o objeto DC do Motor do lego """
-        return DCMotor(self.__definirPorta(Port=Port))
+        try:
+            return DCMotor(self.__definirPorta(Port=Port))
+        except Exception as e:
+            raise ValueError("Não foi possível iniciar o DCMotor.")
 
     def getDirection(self):
         """ Retorna a classe Direction do lego """
@@ -86,7 +102,10 @@ class RoboImports:
 
     def getDriveBase(self, motorEsquerdo, motorDireito, diametroRoda: float, distanciaEntreAsRodas: int):
         """ Retorna o objeto DriveBase do lego """
-        return DriveBase(motorEsquerdo.getMotor(), motorDireito.getMotor(), wheel_diameter=diametroRoda, axle_track=distanciaEntreAsRodas)
+        try:
+            return DriveBase(motorEsquerdo.getMotor(), motorDireito.getMotor(), wheel_diameter=diametroRoda, axle_track=distanciaEntreAsRodas)
+        except Exception as e:
+            raise ValueError("Não foi possível iniciar o DriveBase.")
 
     def getPorta(self):
         """ Retorna a classe com a porta desejada do lego """
