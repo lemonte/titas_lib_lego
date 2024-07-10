@@ -61,7 +61,7 @@ class RoboImports:
         try:
             return GyroSensor(self.__definirPorta(port))
         except Exception as e:
-            raise ValueError("Não foi possível iniciar o Giroscópio.")
+            raise ValueError("Não foi possível iniciar o Giroscópio. porta: " + port)
 
     def getStop(self):
         """ Retorna a classe de Stop do lego. """
@@ -75,26 +75,26 @@ class RoboImports:
         try:
             return ColorSensor(self.__definirPorta(Port))
         except Exception as e:
-            raise ValueError("Não foi possível iniciar o sensor de Cor.")
+            raise ValueError("Não foi possível iniciar o sensor de Cor. porta: " + Port)
 
     def getLUMPDevice(self, Port: str):
         try:
             return LUMPDevice(self.__definirPorta(Port=Port))
         except Exception as e:
-            raise ValueError("Não foi possível iniciar o LUMPDevice.")
+            raise ValueError("Não foi possível iniciar o LUMPDevice. porta: " + Port)
 
     def getUltrasonicSensor(self, Port: str):
         try:
             return UltrasonicSensor(self.__definirPorta(Port=Port))
         except Exception as e:
-            raise ValueError("Não foi possível iniciar o UltrasonicSensor.")
+            raise ValueError("Não foi possível iniciar o UltrasonicSensor. porta: " + Port)
 
     def getDCMotor(self, Port: str):
         """ Retorna o objeto DC do Motor do lego """
         try:
             return DCMotor(self.__definirPorta(Port=Port))
         except Exception as e:
-            raise ValueError("Não foi possível iniciar o DCMotor.")
+            raise ValueError("Não foi possível iniciar o DCMotor. porta: " + Port)
 
     def getDirection(self):
         """ Retorna a classe Direction do lego """
