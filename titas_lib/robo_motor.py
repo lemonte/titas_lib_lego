@@ -2,6 +2,7 @@
 from titas_lib.hub_base import HubType
 from titas_lib.acoes_robo import PararInstantaneamenteEMantenhaNoAngulo, AcaoFinalRobo
 from titas_lib.falar_erro import falar_erro
+from titas_lib.robo_imports import *
 
 class RoboMotor:
     __motor = None
@@ -9,8 +10,11 @@ class RoboMotor:
     @falar_erro
     def __init__(self, Port: str, reverse:bool = False):
         print("#### RoboMotor ####")
+        direction = Direction.CLOCKWISE
+        if(reverse):
+            direction = Direction.COUNTERCLOCKWISE
         try:
-            self.__motor = HubType.__instance.getImports().get_motor(port=Port, reverse=reverse)
+            self.__motor = Motor(port= HubType.definirPorta(Port), positive_direction=direction)
         except Exception as _:
           raise TypeError("Não foi possivel iniciar o motor, verifique a porta: " + Port)
     

@@ -1,79 +1,81 @@
-
 from titas_lib.robo_motor import RoboMotor
 
-class SeguidorLinha:
-    """" INICIA A CLASSE SEGUIDOR DE LINHA ex: SeguidorLinha() 
-    (kp) é a constante proporcional.
-    (Kd) é a constante derivativa
-    """
+    # Variáveis de estado do seguidor de linha
 
-    __kp = 10
-    __kd = 10
-    __erro = 0
-    __erroAnterior = 0        
-    __potencia_maxima = 90
+class PIDController:
+
+    __erroAnterior = 0    
 
     def __calcularErro(self, leitura_sensor_esquerdo, leitura_sensor_direito):
-        return (leitura_sensor_esquerdo - leitura_sensor_direito)
+        return leitura_sensor_esquerdo - leitura_sensor_direito
 
     def __calcularPotencia(self, kp, kd, erro, erroAnterior):
-        return ((erro * kp) + kd * (erro - erroAnterior))
+        return (erro * kp) + kd * (erro - erroAnterior)
 
-    def ___excedenteMotores(self, potenciaCalculada):
-        if(abs(potenciaCalculada) < self.__potencia_maxima):
+    def __excedenteMotores(self, potenciaCalculada, potencia_maxima):
+        if abs(potenciaCalculada) < potencia_maxima:
             return 0
-        if(potenciaCalculada < 0):
-            return (self.__potencia_maxima - potenciaCalculada)
-        return (potenciaCalculada - self.__potencia_maxima)
+        if potenciaCalculada < 0:
+            return potencia_maxima - abs(potenciaCalculada)
+        return potenciaCalculada - potencia_maxima
 
-    def seguirLinhaPreta(self, cor_vermelha_esquerda: int, cor_vermelha_direta: int,  motor_direito: RoboMotor, motor_esquerdo: RoboMotor,  kp: float = 1, kd: float = 1, potencia_motores: int = 70):
-        self.__kp = kp
-        self.__kd = kd
-        self.__potencia_maxima = potencia_motores
-        if(motor_direito == None or motor_esquerdo == None):
+
+    def calculoPID(
+        self,
+        valor_referencia_1: int, 
+        valor_referencia_2: int, 
+        kp: float = 1, 
+        kd: float = 1, 
+        valor_maximo_permitido: int = 70
+    ):
+
+        if valor_referencia_1 is None or valor_referencia_2 is None:
+            raise TypeError("#### Verifique se os valores RGB foram passados corretamente #####")
+
+        # Calcula o erro
+        erro = self.__calcularErro(valor_referencia_1, valor_referencia_2)
+        potencia = self.__calcularPotencia(kp, kd, erro, self.__erroAnterior)
+        self.__erroAnterior = erro
+
+        # Calcula potência para cada motor
+        potencia_esquerdo = valor_maximo_permitido + potencia
+        potencia_direito = valor_maximo_permitido - potencia
+
+        diferenca_d = self.__excedenteMotores(potencia_direito, valor_maximo_permitido)
+        diferenca_e = self.__excedenteMotores(potencia_esquerdo, valor_maximo_permitido)
+
+        potencia_direito -= diferenca_e
+        potencia_esquerdo -= diferenca_d
+
+        potencia_esquerdo = max(-valor_maximo_permitido, min(potencia_esquerdo, valor_maximo_permitido))
+        potencia_direito = max(-valor_maximo_permitido, min(potencia_direito, valor_maximo_permitido))
+
+        # Mover motores
+        return [potencia_esquerdo, potencia_direito]
+
+
+
+    def seguirLinha(
+        self,
+        cor_vermelha_esquerda: int, 
+        cor_vermelha_direita: int, 
+        motor_direito: RoboMotor, 
+        motor_esquerdo: RoboMotor, 
+        kp: float = 1, 
+        kd: float = 1, 
+        potencia_motores: int = 70
+    ):
+
+        if motor_direito is None or motor_esquerdo is None:
             print("#### Verifique se os motores foram passados corretamente #####")
-        else:
-          if(cor_vermelha_esquerda == None or cor_vermelha_direta == None):
-              print("#### Verifique se os rgb(s) de cor foram passados corretamente #####")
-          else:
-              leitura_sensor_esquerdo = cor_vermelha_esquerda
-              leitura_sensor_direito = cor_vermelha_direta
-              self.__aux = self.__erro
-              self.__erro = self.__calcularErro(
-                  leitura_sensor_esquerdo, leitura_sensor_direito)
-              self.__erroAnterior = self.__aux
+            raise TypeError("#### Verifique se os motores foram passados corretamente #####")
 
-            #   erro = abs(self.__erro)
-            #   if(erro > 2):
-            #       self.__potencia_maxima = potencia_motores - erro
-
-              # calcula a potencia
-              potencia = self.__calcularPotencia(
-                  self.__kp, self.__kd, self.__erro, self.__erroAnterior)
-              
-              potencia_esquerdo = potencia_motores + potencia
-              potencia_direito = potencia_motores - potencia
-
-            #   print("potencia ", potencia)
-
-
-              diferenca_d = self.___excedenteMotores(potencia_direito)
-              diferenca_e = self.___excedenteMotores(potencia_esquerdo)
-
-
-            #   print("excedente esquerda ", diferenca_e)
-            #   print("excedente direita ", diferenca_d)
-
-
-              potencia_direito = potencia_direito - diferenca_e
-              potencia_esquerdo = potencia_esquerdo  - diferenca_d
-
-
-              potencia_esquerdo = max(-self.__potencia_maxima, min(potencia_esquerdo, self.__potencia_maxima))
-              potencia_direito = max(-self.__potencia_maxima, min(potencia_direito, self.__potencia_maxima))
-            #   print("potencia esquerda ", potencia_esquerdo)
-            #   print("potencia direita ", potencia_direito)
-
-              # mover motores
-              motor_direito.moverPorPotencia(potencia_direito)
-              motor_esquerdo.moverPorPotencia(potencia_esquerdo)
+        potencia_esquerdo, potencia_direito = self.calculoPID(
+            cor_vermelha_esquerda,
+            cor_vermelha_direita,
+            kp,
+            kd,
+            potencia_motores,
+        )
+        motor_direito.moverPorPotencia(potencia_direito)
+        motor_esquerdo.moverPorPotencia(potencia_esquerdo)

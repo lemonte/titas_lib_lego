@@ -2,18 +2,19 @@
 from titas_lib.hub_base import HubType
 from titas_lib.hub_robo import RoboHub
 from titas_lib.falar_erro import falar_erro
+from titas_lib.robo_imports import *
 
 
 class RoboGiroscopio:
     __giro = None
 
     @falar_erro
-    def __init__(self, Port: str):
+    def __init__(self, port: str):
         print("#### RoboGiroscopio ####")
         try:
-            self.__giro = HubType.__instance.getImports().getGiroscopico(Port=Port)
+            self.__giro = GyroSensor(port=HubType.definirPorta(port))
         except Exception as _:
-          raise TypeError("Não foi possivel iniciar o sensor, verifique a porta: " + Port)
+          raise TypeError("Não foi possivel iniciar o sensor, verifique a porta: " + port)
     
     
 
@@ -52,15 +53,17 @@ class RoboCor:
     __sensor = None
 
     @falar_erro
-    def __init__(self, Port: str):
+    def __init__(self, port: str):
         try:
             print("#### RoboCor ####")
-            self.__sensor = HubType.__instance.getImports().getColorSensor(Port=Port)
+            self.__sensor = ColorSensor(port=HubType.definirPorta(port))
         except Exception as _:
-          raise TypeError("Não foi possivel iniciar o sensor, verifique a porta: " + Port)
+          raise TypeError("Não foi possivel iniciar o sensor, verifique a porta: " + port)
             
     @falar_erro
     def pegarRGB(self):
+        if(HubType.hub_type == RoboHub.SPIKEHUB):
+          raise TypeError("O Spike não possui essa funcionalidade")
         return self.__sensor.rgb()
 
     @falar_erro
@@ -69,7 +72,7 @@ class RoboCor:
     
     @falar_erro
     def pegarHsv(self):
-        if(HubType.__instance.getImports().hub_type == RoboHub.EV3BRICK):
+        if(HubType.hub_type == RoboHub.EV3BRICK):
           raise TypeError("O EV3 não possui essa funcionalidade")
         return self.__sensor.hsv()
     
@@ -82,12 +85,12 @@ class RoboUltrassonico:
     __sensor = None
 
     @falar_erro
-    def __init__(self, Port: str):
+    def __init__(self, port: str):
         print("#### RoboUltrassonico ####")
         try:
-            self.__sensor = HubType.__instance.getImports().getUltrasonicSensor(Port=Port)
+            self.__sensor = UltrasonicSensor(port=HubType.definirPorta(port=port))
         except Exception as _:
-          raise TypeError("Não foi possivel iniciar o sensor, verifique a porta: " + Port)
+          raise TypeError("Não foi possivel iniciar o sensor, verifique a porta: " + port)
     
     @falar_erro
     def pegarDistancia(self):

@@ -3,6 +3,7 @@ from titas_lib.hub_base import HubType
 from titas_lib.robo_motor import RoboMotor
 from titas_lib.falar_erro import falar_erro
 from titas_lib.acoes_robo import PararInstantaneamenteEMantenhaNoAngulo
+from titas_lib.robo_imports import *
 
 
 class RoboBase:
@@ -15,7 +16,7 @@ class RoboBase:
             distanciaEntreAsRodas: int,
     ) -> None:
         print("#### RoboBase ####")
-        self.__driveBase = HubType.__instance.getImports().getDriveBase(
+        self.__driveBase = DriveBase(
             motorDireito=motorDireito, 
             motorEsquerdo=motorEsquerdo, 
             diametroRoda=diametroRoda, 
