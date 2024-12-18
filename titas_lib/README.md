@@ -1,18 +1,22 @@
-SEK - Sistema de Controle para Robôs
+
+# SEK - Sistema de Controle para Robôs
 
 Este repositório contém funções úteis para controle de robôs utilizando o Pybricks e hubs compatíveis como o EV3. Inclui comandos para configuração, funções gerais, de movimento, sensores e controle de motores.
 
-=============================================================
-Comandos para Executar no VSCode
-=============================================================
+---
 
+## 🚀 Comandos para Executar no VSCode
+
+```bash
 source ../tcc/.venv/bin/activate
 pybricksdev run ble example.py
+```
 
-=============================================================
-Funções Gerais
-=============================================================
+---
 
+## 📜 Funções Gerais
+
+```python
 def executar(self):
     """
     Executa uma ação definida.
@@ -36,11 +40,13 @@ def __init__(self, hub=RoboHub.EV3BRICK):
     Parâmetros:
         hub: Tipo de hub (padrão: RoboHub.EV3BRICK).
     """
+```
 
-=============================================================
-Funções de Movimento
-=============================================================
+---
 
+## 🚦 Funções de Movimento
+
+```python
 def moverSemParar(self, velocidade=0, angulo_curvatura=0):
     """
     Faz o robô andar continuamente.
@@ -93,11 +99,13 @@ def seguirLinhaPreta(self, cor_vermelha_esquerda, cor_vermelha_direta, motor_dir
         kd: Ganho derivativo.
         potencia_motores: Potência dos motores.
     """
+```
 
-=============================================================
-Funções de Sensores
-=============================================================
+---
 
+## 📡 Funções de Sensores
+
+```python
 def pegarRGB(self):
     """
     Retorna os valores RGB detectados pelo sensor.
@@ -152,11 +160,13 @@ def resetAnguloAcumulado(self):
     """
     Reseta o ângulo acumulado do giroscópio para 0.
     """
+```
 
-=============================================================
-Funções Específicas do Motor
-=============================================================
+---
 
+## ⚙️ Funções Específicas do Motor
+
+```python
 def getAngulo(self):
     """
     Retorna o ângulo atual do motor.
@@ -226,3 +236,4 @@ def moverParaUmAnguloRapidamente(self, anguloDestino):
     """
     Move o motor rapidamente até atingir um ângulo específico.
     """
+```
