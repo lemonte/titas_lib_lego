@@ -2,7 +2,8 @@
 
 from titas_lib.robo_motor import RoboMotor
 from titas_lib.falar_erro import falar_erro
-from titas_lib.robo_imports import *
+# from titas_lib.robo_imports import *
+from pybricks.robotics import DriveBase
 
 
 class RoboBase(DriveBase):
