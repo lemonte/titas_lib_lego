@@ -1,5 +1,5 @@
 # acoes_robo.py
-from titas_lib.hub_base import HubType
+from titas_lib.robo_imports import Stop
 from titas_lib.falar_erro import falar_erro
 
 class AcaoFinalRobo:
@@ -10,14 +10,14 @@ class AcaoFinalRobo:
 class DeixarRodarLivre(AcaoFinalRobo):
     @falar_erro
     def executar(self):
-        return HubType.__instance.getImports().getStop().COAST
+        return Stop.COAST
 
 class PararLentamente(AcaoFinalRobo):
     @falar_erro
     def executar(self):
-        return HubType.__instance.getImports().getStop().BRAKE
+        return Stop.BRAKE
 
 class PararInstantaneamenteEMantenhaNoAngulo(AcaoFinalRobo):
     @falar_erro
     def executar(self):
-        return HubType.__instance.getImports().getStop().HOLD
+        return Stop.HOLD

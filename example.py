@@ -10,6 +10,8 @@ motor_dir = RoboMotor(Port="a")
 cor_esq = RoboCor(Port="3")
 cor_dir = RoboCor(Port="4")
 
+
+
 while True:
   PIDController().seguirLinha(
     kd=1,
